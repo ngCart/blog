@@ -31,8 +31,10 @@ trait HasBlogPermissions
             {
                 abort(400, "Permission [".$permission."] does not exist.");
             }
-            $user->blogPermissions()->attach($valid_permission);
+            $user->blogPermissions()->syncWithoutDetaching($valid_permission);
         });
+
+        return $user;
 
     }
 
@@ -42,6 +44,7 @@ trait HasBlogPermissions
         $permissions = BlogPermission::all()->each(function($permission) use ($user){
             $user->giveBlogPermission($permission->name);
         });
+        return $user->blogPermissions;
     }
 
     public function hasBlogPermission($permission)

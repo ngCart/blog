@@ -20,5 +20,4 @@ Route::group(['prefix'=>'api/blog'], function(){
     Route::get('pages', 'PageController@index');
     Route::get('pages/{page}', 'PageController@show');
 
-
 });
