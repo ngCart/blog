@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\BlogCategory;
+use IFrankSmith\Blogman\Models\BlogPermission;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -92,6 +93,21 @@ class CreateBlogPostsTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+
+        $permissions = [
+            "add-blog",
+            "update-blog",
+            "delete-blog",
+            "add-page",
+            "update-page",
+            "delete-page",
+        ];
+
+        foreach ($permissions as $permission){
+            BlogPermission::create([
+                "name"=>$permission
+            ]);
+        }
 
         Schema::create('blog_permission_user', function (Blueprint $table) {
             $table->bigIncrements('id');

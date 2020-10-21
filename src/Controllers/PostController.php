@@ -30,7 +30,6 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $user =  auth()->user();
-        return $user->blogPermissions;
         $request->validate([
             "title" => "required|string|max:1000",
             "body"=>"required",

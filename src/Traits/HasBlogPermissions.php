@@ -1,9 +1,9 @@
 <?php
-namespace App\Traits;
+namespace IFrankSmith\Blogman\Traits;
 
-use App\Models\BlogPage;
-use App\Models\BlogPermission;
-use App\Models\BlogPost;
+use IFrankSmith\Blogman\Models\BlogPage;
+use IFrankSmith\Blogman\Models\BlogPermission;
+use IFrankSmith\Blogman\Models\BlogPost;
 
 trait HasBlogPermissions
 {
@@ -27,13 +27,21 @@ trait HasBlogPermissions
         $user = $this;
         $permissions = collect($permission)->each(function($permission) use ($user){
             $valid_permission = BlogPermission::whereId($permission)->orWhere('name',$permission)->first();
-            if(!$permission)
+            if(!$valid_permission)
             {
                 abort(400, "Permission [".$permission."] does not exist.");
             }
-            $user->blogPermission()->attach($permission);
+            $user->blogPermissions()->attach($valid_permission);
         });
 
+    }
+
+    public function giveAllBlogPermissions()
+    {
+        $user = $this;
+        $permissions = BlogPermission::all()->each(function($permission) use ($user){
+            $user->giveBlogPermission($permission->name);
+        });
     }
 
     public function hasBlogPermission($permission)
