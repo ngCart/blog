@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\BlogCategory;
+use \IFrankSmith\Blogman\Models\BlogCategory;
 use IFrankSmith\Blogman\Models\BlogPermission;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
